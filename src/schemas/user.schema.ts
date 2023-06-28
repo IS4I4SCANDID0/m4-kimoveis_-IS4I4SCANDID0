@@ -3,7 +3,7 @@ import { z } from "zod";
 const userSchema = z.object({
   id: z.number().positive(),
   name: z.string().max(45),
-  email: z.string().max(45),
+  email: z.string().email().max(45),
   password: z.string().max(120),
   admin: z.boolean().default(() => false),
   createdAt: z.date(),
@@ -11,17 +11,17 @@ const userSchema = z.object({
   deleteAt: z.date().nullable()  
 })
 
-const userReturn = userSchema.omit({ password: true });
+const userReturnSchema = userSchema.omit({ password: true });
 
-const userCreate = z.object({
-  name: z.string().max(45),
-  email: z.string().max(45),
-  password: z.string().max(120),
-  admin: z.boolean().optional().default(() => false),
+const userCreateSchema = userSchema.omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  deleteAt: true
 })
 
-const userUpdate = userCreate.omit({ admin: true })
+const userUpdateSchema = userCreateSchema.omit({ admin: true }).partial()
 
-const userRead = userReturn.array()
+const userReadSchema = userReturnSchema.array()
 
-export { userSchema, userReturn, userCreate, userUpdate, userRead }
+export { userSchema, userReturnSchema, userCreateSchema, userUpdateSchema, userReadSchema }

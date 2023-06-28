@@ -1,10 +1,14 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import Schedule from "./schedules.entity";
+import { getRounds, hashSync } from "bcryptjs";
 
 @Entity("users")
 class User {
   @PrimaryGeneratedColumn("increment")
   id: number;
+  
+  @Column({ length: 45 })
+  name: string;
 
   @Column({ length: 45, unique: true })
   email: string;
@@ -21,13 +25,20 @@ class User {
   @UpdateDateColumn({ type: "date" })
   updatedAt: string;
 
-  @DeleteDateColumn({ type: "date" ,nullable: true })
+  @DeleteDateColumn({ type: "date", nullable: true })
   deleteAt?: string | null | undefined;
 
   @OneToMany(() => Schedule, (s) => s.user)
-  schedules: Schedule[]
+  schedules: Schedule[];
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  cryptPassword() {
+    const hasRounds: number = getRounds(this.password);
+    if(!hasRounds) {
+      this.password = hashSync(this.password, 10)
+    }
+  }
 }
 
-export default User;
-//user e real_state podem ter vários shedules, real_state
-//pode ter um único address e pode ter várias categories
+export default User ;
