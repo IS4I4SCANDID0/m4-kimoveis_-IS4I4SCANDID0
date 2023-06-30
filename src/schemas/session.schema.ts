@@ -1,8 +1,5 @@
-import { z } from "zod";
+import { userSchema } from "./user.schema";
 
-const sessionLoginSchema = z.object({
-  email: z.string().email().max(45),
-  password: z.string().max(120)
-});
+const sessionLoginSchema = userSchema.pick({ email: true, password: true });
 
-export { sessionLoginSchema }
+export { sessionLoginSchema };
