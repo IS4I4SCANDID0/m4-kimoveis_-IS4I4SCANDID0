@@ -20,7 +20,7 @@ const userCreateSchema = userSchema.omit({
   deleteAt: true
 });
 
-const userUpdateSchema = userCreateSchema.partial().omit({ admin: true, password: true })
+const userUpdateSchema = userCreateSchema.partial().omit({ admin: true })
 
 const userReadSchema = userReturnSchema.array()
 

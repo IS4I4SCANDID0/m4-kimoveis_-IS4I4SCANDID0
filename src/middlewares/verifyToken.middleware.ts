@@ -8,10 +8,13 @@ const verifyToken = (req: Request, res: Response, next: NextFunction): void => {
   if(!authorization) throw new AppError("Missing bearer token", 401);
 
   const [_bearer, token]: Array<string> = authorization.split(" ");
-  res.locals = { 
-    ...res.locals,
-    decoded: verify(token, process.env.SECRET_KEY!)
-  }
+  verify(token, process.env.SECRET_KEY!, (err: any, decoded: any) => {
+    if(err) throw new AppError(err.message, 401)
+    res.locals = { 
+      ...res.locals,
+      decoded
+    }
+  })
   return next();
 };
 

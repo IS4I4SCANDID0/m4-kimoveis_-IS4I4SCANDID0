@@ -16,13 +16,13 @@ const readUsers = async (): Promise<TUserRead> => {
   return userReadSchema.parse(await userRepository.find({ withDeleted: true }));
 };
 
-// const updateUser = async (user: User, payload: TUserUpdate): Promise<TUserReturn> => {
-//   const updatedUser: TUserRepo = await userRepository.save({ ...user, ...payload })
-//   return userReturnSchema.parse(updateUser)
-// }
+const updateUser = async (user: User, payload: TUserUpdate): Promise<TUserReturn> => {
+  const updatedUser: User = await userRepository.save({ ...user, ...payload })
+  return userReturnSchema.parse(updatedUser)
+}
 
 const disableUser = async (user: User): Promise<void> => {
   await userRepository.softRemove(user);
 };
 
-export { createUser, readUsers, disableUser }
+export { createUser, readUsers, updateUser, disableUser }
