@@ -9,7 +9,7 @@ class Category {
   @Column({ length: 45, unique: true })
   name: string;
 
-  @OneToMany(() => RealEstate, (re) => re.categories)
+  @OneToMany(() => RealEstate, (re) => re.category)
   realEstate: RealEstate[];
 }
 

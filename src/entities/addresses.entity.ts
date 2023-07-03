@@ -22,7 +22,7 @@ class Address{
   state: string;
 
   @OneToOne(() => RealEstate, (realEstate) => realEstate.address)
-  realEstate?: Address | null | undefined 
+  realEstate?: RealEstate | null | undefined 
 }
 
 export default Address
