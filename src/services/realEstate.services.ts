@@ -12,6 +12,7 @@ import { realEstatesReadSchema } from "../schemas/realEstate.schema";
 
 const createRealEstate = async (payload: TRealEstateCreate): Promise<RealEstate> => {
   const { address: addressData, categoryId, ...realEstateData } = payload;
+  
   const existingAddress = await addressRepository.createQueryBuilder("address")
     .where("address.street = :street", { street: addressData.street })
     .andWhere("address.zipCode = :zipCode", { zipCode: addressData.zipCode })
@@ -42,10 +43,9 @@ const createRealEstate = async (payload: TRealEstateCreate): Promise<RealEstate>
   return realEstate;
 };
 
-const readRealEstates = async (): Promise<TRealEstatesRead> => {
-  return realEstatesReadSchema.parse(await realEstateRepository.find({ relations:
-    { address: true, category: true } 
-  }))
+const readRealEstates = async (): Promise<RealEstate[]> => {
+  const realEstate = await realEstateRepository.find({ relations: { address: true, category: true } })
+  return realEstate;
 }
 
 export { createRealEstate, readRealEstates }

@@ -14,4 +14,9 @@ const readCategories = async (): Promise<TCategoriesRead> => {
   return categoriesReadSchema.parse(await categoryRepository.find()) 
 }
 
-export { createCategory, readCategories }
+const readCategoriesOfRealEstate = async (id: string): Promise<Category | null> => {
+  const category: Category | null = await categoryRepository.findOne({ where: { id: Number(id) } , relations: { realEstate: true } });
+  return category
+}
+
+export { createCategory, readCategories, readCategoriesOfRealEstate }
