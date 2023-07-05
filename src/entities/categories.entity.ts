@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import RealEstate from "./real_estate.entity";
+import { RealEstate } from "./real_estate.entity";
 
 @Entity("categories")
 class Category {
@@ -13,4 +13,4 @@ class Category {
   realEstate: RealEstate[];
 }
 
-export default Category 
+export { Category } 

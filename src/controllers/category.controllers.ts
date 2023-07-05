@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { TCategories, TCategoriesRead } from "../interfaces/categories.interfaces";
 import { createCategory, readCategories, readCategoriesOfRealEstate } from "../services/categories.services";
-import Category from "../entities/categories.entity";
+import { Category } from "../entities";
+
 
 const createCategoryController = async (req: Request, res: Response): Promise<Response> => {
   const category: TCategories = await createCategory(req.body);

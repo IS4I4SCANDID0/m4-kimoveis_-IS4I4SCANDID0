@@ -1,4 +1,5 @@
-import Category from "../entities/categories.entity";
+
+import { Category } from "../entities";
 import { TCategories, TCategoriesCreate, TCategoriesRead } from "../interfaces/categories.interfaces";
 import { categoryRepository } from "../repositories/category.repository";
 import { categoriesReadSchema, categoriesSchema } from "../schemas/categories.schema";

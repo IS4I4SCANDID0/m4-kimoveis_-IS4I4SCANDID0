@@ -1,12 +1,13 @@
 import { Request } from "express";
-import Schedule from "../entities/schedules.entity";
+
 import { TSchedule, TScheduleCreate, TSchedulesRead } from "../interfaces/shedules.interfaces";
 import { schedulesRepository } from "../repositories/schedules.repository";
 import AppError from "../error/AppError";
 import { scheduleSchema } from "../schemas/shedules.schema";
 import { userRepository } from "../repositories/user.repository";
 import { realEstateRepository } from "../repositories/realEstate.repository";
-import RealEstate from "../entities/real_estate.entity";
+import { RealEstate, Schedule } from "../entities";
+
 
 const createSchedule = async (payload: TScheduleCreate, userId: number): Promise<{message: string}> => {
   const { date, hour, realEstateId } = payload;

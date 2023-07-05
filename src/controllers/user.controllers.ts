@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import User from "../entities/users.entity";
+
 import { createUser, disableUser, readUsers, updateUser } from "../services/user.services";
 import { TUserRead, TUserReturn, TUserUpdate } from "../interfaces/user.interfaces";
+import { User } from "../entities";
 
 const createUserController = async (req: Request, res: Response): Promise<Response> => {
   const user: TUserReturn = await createUser(req.body);

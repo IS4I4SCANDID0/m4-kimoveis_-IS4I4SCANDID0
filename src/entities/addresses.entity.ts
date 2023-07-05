@@ -1,5 +1,6 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import RealEstate from "./real_estate.entity";
+import { RealEstate } from "./real_estate.entity";
+
 
 @Entity("addresses")
 class Address{
@@ -25,4 +26,4 @@ class Address{
   realEstate?: RealEstate | null | undefined 
 }
 
-export default Address
+export { Address }

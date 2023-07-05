@@ -2,13 +2,14 @@ import AppError from "../error/AppError";
 import { TRealEstateCreate, TRealEstatesRead } from "../interfaces/realEstate.interfaces";
 import { addressRepository } from "../repositories/address.repositoriy";
 import { realEstateRepository } from "../repositories/realEstate.repository";
-import Category from "../entities/categories.entity";
+
 import { categoryRepository } from "../repositories/category.repository";
-import RealEstate from "../entities/real_estate.entity";
+
 import { DeepPartial } from "typeorm";
 import { TCategories } from "../interfaces/categories.interfaces";
 import { userReadSchema } from "../schemas/user.schema";
 import { realEstatesReadSchema } from "../schemas/realEstate.schema";
+import { Category, RealEstate } from "../entities";
 
 const createRealEstate = async (payload: TRealEstateCreate): Promise<RealEstate> => {
   const { address: addressData, categoryId, ...realEstateData } = payload;

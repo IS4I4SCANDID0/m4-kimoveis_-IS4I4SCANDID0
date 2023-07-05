@@ -1,9 +1,7 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import Schedule from "./schedules.entity";
-import Address from "./addresses.entity";
-import Category from "./categories.entity";
-import { z } from "zod";
-import { decimalValueSchema } from "../schemas/realEstate.schema";
+import { Schedule } from "./schedules.entity";
+import { Category } from "./categories.entity";
+import{ Address } from "./addresses.entity"
 
 @Entity("real_estate")
 class RealEstate {
@@ -36,4 +34,4 @@ class RealEstate {
   category: Category
 }
 
-export default RealEstate
+export { RealEstate }

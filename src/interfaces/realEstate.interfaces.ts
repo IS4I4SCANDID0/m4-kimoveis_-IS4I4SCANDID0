@@ -1,8 +1,9 @@
 import { z } from  "zod"
 import { Repository } from "typeorm";
-import RealEstate from "../entities/real_estate.entity";
+
 import { decimalValueSchema, realEstateCreateSchema, realEstateSchema, realEstatesReadSchema } from "../schemas/realEstate.schema";
 import { addressesSchema } from "../schemas/addresses.schema";
+import { RealEstate } from "../entities";
 
 type TRealEstate = {
   id: number;

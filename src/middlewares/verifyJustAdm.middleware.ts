@@ -5,7 +5,7 @@ const verifyIsAdmin = (req: Request, res: Response, next: NextFunction): void =>
   const { admin } = res.locals.decoded;
 
   if (!admin) {
-    throw new AppError("Insufficient permissions", 403);
+    throw new AppError("Insufficient permission", 403);
   }
   return next();
 };

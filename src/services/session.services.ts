@@ -1,9 +1,10 @@
 import { compare } from "bcryptjs";
-import User from "../entities/users.entity";
+
 import AppError from "../error/AppError";
 import { TSessionLoginCreate, TSessionLoginReturn } from "../interfaces/session.interfaces";
 import { userRepository } from "../repositories/user.repository";
 import { sign } from "jsonwebtoken";
+import { User } from "../entities";
 
 const createLogUser = async ({ email, password }: TSessionLoginCreate): Promise<TSessionLoginReturn> => {
   const foundUser: User | null = await userRepository.findOneBy({ email });
