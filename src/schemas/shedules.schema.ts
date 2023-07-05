@@ -3,12 +3,15 @@ import { z } from "zod";
 const scheduleSchema = z.object({
   id: z.number().positive(),
   date: z.string(),
-  hour: z.date(),
-  realState: z.number().positive(),
+  hour: z.string(),
+  realStateId: z.number().positive().int(),
   userId: z.number().positive()
-})
+});
 
-const scheduleCreate = z.object({
+const scheduleCreateSchema = z.object({
   date: z.string(),
-  hour: z.date()
-})
+  hour: z.string(),
+  realEstateId: z.number().positive()
+});
+
+export { scheduleSchema, scheduleCreateSchema }

@@ -13,7 +13,7 @@ const createLogUser = async ({ email, password }: TSessionLoginCreate): Promise<
   if(!samePass) throw new AppError("Invalid credentials", 401); 
 
   const token: string = sign(
-    { admin: foundUser.admin },
+    { admin: foundUser.admin, userId: foundUser.id },
     process.env.SECRET_KEY!,
     { subject: foundUser.id.toString(), expiresIn: process.env.EXPIRES_IN! }
   );
