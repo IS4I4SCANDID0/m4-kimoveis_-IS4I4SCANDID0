@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { verifyIsAdmin } from "../middlewares/verifyJustAdm";
+import { verifyIsAdmin } from "../middlewares/verifyJustAdm.middleware";
 import { validateBody } from "../middlewares/validateBody.middleware";
 import { categoriesCreateSchema } from "../schemas/categories.schema";
 import { createCategoryController, readCategoriesOfRealEstateController, readCategoryController } from "../controllers/category.controllers";

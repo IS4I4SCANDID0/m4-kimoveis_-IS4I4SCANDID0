@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { verifyIsAdmin } from "../middlewares/verifyJustAdm";
+import { verifyIsAdmin } from "../middlewares/verifyJustAdm.middleware";
 import { validateBody } from "../middlewares/validateBody.middleware";
 import { realEstateCreateSchema } from "../schemas/realEstate.schema";
 import { verifyToken } from "../middlewares/verifyToken.middleware";

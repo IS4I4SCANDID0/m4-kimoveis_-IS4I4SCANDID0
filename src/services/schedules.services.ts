@@ -1,11 +1,12 @@
 import { Request } from "express";
 import Schedule from "../entities/schedules.entity";
-import { TSchedule, TScheduleCreate } from "../interfaces/shedules.interfaces";
+import { TSchedule, TScheduleCreate, TSchedulesRead } from "../interfaces/shedules.interfaces";
 import { schedulesRepository } from "../repositories/schedules.repository";
 import AppError from "../error/AppError";
 import { scheduleSchema } from "../schemas/shedules.schema";
 import { userRepository } from "../repositories/user.repository";
 import { realEstateRepository } from "../repositories/realEstate.repository";
+import RealEstate from "../entities/real_estate.entity";
 
 const createSchedule = async (payload: TScheduleCreate, userId: number): Promise<{message: string}> => {
   const { date, hour, realEstateId } = payload;
@@ -20,10 +21,10 @@ const createSchedule = async (payload: TScheduleCreate, userId: number): Promise
   if(exitsUserSchedule) throw new AppError("Schedule already exists for this user in other estate", 409)
 
   const realEstateScheduleExists: Schedule | null = await schedulesRepository.createQueryBuilder("schedules")
-  .where("schedules.realEstateId = :realEstateId", { realEstateId: realEstateId  })
-  .andWhere("schedules.date = :date", { date: date })
-  .andWhere("schedules.hour = :hour", { hour: hour })
-  .getOne();
+    .where("schedules.realEstateId = :realEstateId", { realEstateId: realEstateId  })
+    .andWhere("schedules.date = :date", { date: date })
+    .andWhere("schedules.hour = :hour", { hour: hour })
+    .getOne();
   if(realEstateScheduleExists) throw new AppError("Schedule already exists for this estate", 409);
 
   const selectDate = new Date(date);
@@ -44,7 +45,12 @@ const createSchedule = async (payload: TScheduleCreate, userId: number): Promise
   });
   await schedulesRepository.save(newSchedule);
   
-  return { message: "Schedule registered successes" } 
+  return { message: "Schedule registered successes" };
 }
 
-export { createSchedule }
+const readSchedulesOfEstate = async (id: number): Promise<RealEstate | null> => {
+  const schedules = await realEstateRepository.findOne({ where: { id :id }, relations: { schedules: true }  });
+  return schedules;
+}
+
+export { createSchedule, readSchedulesOfEstate }

@@ -14,4 +14,6 @@ const scheduleCreateSchema = z.object({
   realEstateId: z.number().positive()
 });
 
-export { scheduleSchema, scheduleCreateSchema }
+const scheduleReadSchema = scheduleSchema.array();
+
+export { scheduleSchema, scheduleCreateSchema, scheduleReadSchema }
