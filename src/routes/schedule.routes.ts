@@ -8,7 +8,7 @@ import { verifyRealEstateId } from "../middlewares/verifyRealEstateId.middleware
 
 const schedulesRoutes: Router = Router();
 
-schedulesRoutes.post("", validateBody(scheduleCreateSchema), verifyToken, createScheduleController);
+schedulesRoutes.post("", verifyToken, validateBody(scheduleCreateSchema), createScheduleController);
 schedulesRoutes.get("/realEstate/:id", verifyToken, verifyIsAdmin, verifyRealEstateId, readReaEstateSchedulesController);
 
 export { schedulesRoutes }

@@ -1,9 +1,6 @@
-import { Request } from "express";
-
-import { TSchedule, TScheduleCreate, TSchedulesRead } from "../interfaces/shedules.interfaces";
+import { TScheduleCreate } from "../interfaces/shedules.interfaces";
 import { schedulesRepository } from "../repositories/schedules.repository";
 import AppError from "../error/AppError";
-import { scheduleSchema } from "../schemas/shedules.schema";
 import { userRepository } from "../repositories/user.repository";
 import { realEstateRepository } from "../repositories/realEstate.repository";
 import { RealEstate, Schedule } from "../entities";
@@ -11,15 +8,24 @@ import { RealEstate, Schedule } from "../entities";
 const createSchedule = async (payload: TScheduleCreate, userId: number): Promise<{ message: string }> => {
   const { date, hour, realEstateId } = payload;
 
-  const userExists = await userRepository.findOne({ where: { id: userId } });
+  await userRepository.findOne({ where: { id: userId } });
+  
+  const realEstateExists = await realEstateRepository.findOne({ where: { id: realEstateId } }) 
+  if(!realEstateExists) throw new AppError("RealEstate not found", 404);
 
+  const fullDate = new Date(`${date} ${hour}`);
+  if (fullDate.getDay() === 0 || fullDate.getDay() === 6) throw new AppError("Invalid date, work days are monday to friday");
+  if (fullDate.getHours() < 8 || fullDate.getHours() > 18) {
+    throw new AppError("Invalid hour, available times are 8AM to 18PM");
+  }
+  
   const exitsUserSchedule = await schedulesRepository
     .createQueryBuilder("schedules")
     .where("schedules.userId = :userId", { userId: userId })
     .andWhere("schedules.date = :date", { date: date })
     .andWhere("schedules.hour = :hour", { hour: hour })
     .getOne();
-  if (exitsUserSchedule) throw new AppError("Schedule already exists for this user in other estate", 409);
+  if (exitsUserSchedule) throw new AppError("User schedule to this real estate at this date and time already exists", 409);
 
   const realEstateScheduleExists: Schedule | null = await schedulesRepository
     .createQueryBuilder("schedules")
@@ -27,15 +33,8 @@ const createSchedule = async (payload: TScheduleCreate, userId: number): Promise
     .andWhere("schedules.date = :date", { date: date })
     .andWhere("schedules.hour = :hour", { hour: hour })
     .getOne();
-  if (realEstateScheduleExists) throw new AppError("Schedule already exists for this estate", 409);
+  if (realEstateScheduleExists) throw new AppError("Schedule to this real estate at this date and time already exists", 409);
 
-  const selectDate = new Date(date);
-  if (selectDate.getDay() === 0 || selectDate.getDay() === 6) throw new AppError("Possible to schedules is only weekdays");
-
-  const selectHour = new Date(`${date}T${hour}`);
-  if (selectHour.getHours() < 8 || selectHour.getHours() > 18 || selectHour.getMinutes() !== 0) {
-    throw new AppError("Possible to schedules is only time 08am to 18pm");
-  }
   const realEstate = await realEstateRepository.findOne({ where: { id: realEstateId } });
   const user = await userRepository.findOne({ where: { id: userId } });
 
@@ -45,8 +44,8 @@ const createSchedule = async (payload: TScheduleCreate, userId: number): Promise
     user: user!,
   });
   await schedulesRepository.save(newSchedule);
-
-  return { message: "Schedule registered successes" };
+ 
+  return { message: "Schedule created" };
 };
 
 const readReaEstateSchedules = async (id: number): Promise<RealEstate | null> => {

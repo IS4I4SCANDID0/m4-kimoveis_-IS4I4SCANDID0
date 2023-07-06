@@ -46,7 +46,7 @@ const createRealEstate = async (payload: TRealEstateCreate): Promise<RealEstate>
 };
 
 const readRealEstates = async (): Promise<RealEstate[]> => {
-  const realEstate = await realEstateRepository.find({ relations: { address: true, category: true } })
+  const realEstate = await realEstateRepository.find({ relations: { address: true } })
   return realEstate;
 }
 

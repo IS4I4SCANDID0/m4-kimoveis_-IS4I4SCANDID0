@@ -1,8 +1,5 @@
 import { Request, Response } from "express";
-import { TRealEstate, TRealEstatesRead } from "../interfaces/realEstate.interfaces";
 import { createRealEstate, readRealEstates } from "../services/realEstate.services";
-
-import { readCategoriesOfRealEstate } from "../services/categories.services";
 import { RealEstate } from "../entities";
 
 const createRealEstateController = async (req: Request, res: Response): Promise<Response> => {

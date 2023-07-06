@@ -1,13 +1,11 @@
 import { Request, Response } from "express";
-
-import { TSchedule, TSchedulesRead } from "../interfaces/shedules.interfaces";
 import { createSchedule, readReaEstateSchedules } from "../services/schedules.services";
 import { RealEstate } from "../entities";
 
 const createScheduleController = async (req: Request, res: Response): Promise<Response> => {
-  const { userId } = res.locals.decoded
+  const { sub } = res.locals.decoded
   
-  const schedule: { message: string } = await createSchedule(req.body, userId);
+  const schedule: { message: string } = await createSchedule(req.body, sub);
   return res.status(201).json(schedule);
 }
 

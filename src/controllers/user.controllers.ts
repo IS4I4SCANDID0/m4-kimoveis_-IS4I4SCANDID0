@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-
 import { createUser, disableUser, readUsers, updateUser } from "../services/user.services";
 import { TUserRead, TUserReturn, TUserUpdate } from "../interfaces/user.interfaces";
 import { User } from "../entities";

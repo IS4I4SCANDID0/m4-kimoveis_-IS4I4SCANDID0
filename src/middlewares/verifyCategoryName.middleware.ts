@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import AppError from "../error/AppError";
-
 import { categoryRepository } from "../repositories/category.repository";
 import { Category } from "../entities";
 

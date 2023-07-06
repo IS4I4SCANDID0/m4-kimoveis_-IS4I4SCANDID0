@@ -8,7 +8,6 @@ const handleErrors = (error: unknown, req: Request, res: Response, nest: NextFun
   };
 
   if(error instanceof ZodError) {
-    console.log(error.flatten().fieldErrors)
     return res.status(400).json({ message: error.flatten().fieldErrors })
   };
   console.error(error);
