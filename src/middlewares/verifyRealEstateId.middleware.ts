@@ -7,7 +7,7 @@ const verifyRealEstateId = async (req: Request, res: Response, next: NextFunctio
   const id: number = Number(req.params.id);
   const realEstateId: RealEstate | null = await realEstateRepository.findOneBy({ id });
 
-  if (!realEstateId) throw new AppError("Property not found", 404);
+  if (!realEstateId) throw new AppError("RealEstate not found", 404);
 
   res.locals = { ...res.locals, realEstateId };
 

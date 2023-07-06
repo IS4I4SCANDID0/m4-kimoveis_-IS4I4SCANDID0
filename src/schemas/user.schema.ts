@@ -8,7 +8,7 @@ const userSchema = z.object({
   admin: z.boolean().default(() => false),
   createdAt: z.string(),//!TROCAR AQUI    
   updatedAt: z.string(),//!TROCAR AQUI
-  deleteAt: z.string().nullable() //!TROCAR AQUI
+  deletedAt: z.string().nullish() //!TROCAR AQUI
 })
 
 const userReturnSchema = userSchema.omit({ password: true });
@@ -17,7 +17,7 @@ const userCreateSchema = userSchema.omit({
   id: true,
   createdAt: true,
   updatedAt: true,
-  deleteAt: true
+  deletedAt: true
 });
 
 const userUpdateSchema = userCreateSchema.partial().omit({ admin: true })

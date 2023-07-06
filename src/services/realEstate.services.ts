@@ -19,8 +19,10 @@ const createRealEstate = async (payload: TRealEstateCreate): Promise<RealEstate>
     .andWhere("address.zipCode = :zipCode", { zipCode: addressData.zipCode })
     .andWhere("address.city = :city", { city: addressData.city })
     .andWhere("address.state = :state", { state: addressData.state })
+    .andWhere("address.number = :number", { number: addressData.number })
     .getOne();
-  if(existingAddress) throw new AppError("Address already registered", 409);
+  if(existingAddress) throw new AppError("Address already exists", 409)
+  
 
   const newAddress = addressRepository.create(addressData);
   await addressRepository.save(newAddress)
@@ -39,9 +41,8 @@ const createRealEstate = async (payload: TRealEstateCreate): Promise<RealEstate>
     category: category
   } as DeepPartial<RealEstate>);
 
-  await realEstateRepository.save(realEstate)
-
-  return realEstate;
+  const realEstateCreated = await realEstateRepository.save(realEstate)
+  return realEstateCreated;
 };
 
 const readRealEstates = async (): Promise<RealEstate[]> => {
