@@ -37,7 +37,7 @@ const createRealEstate = async (payload: TRealEstateCreate): Promise<RealEstate>
     category: category
   } as DeepPartial<RealEstate>);
 
-  const realEstateCreated = await realEstateRepository.save(realEstate)
+  const realEstateCreated: RealEstate = await realEstateRepository.save(realEstate)
   return realEstateCreated;
 };
 
