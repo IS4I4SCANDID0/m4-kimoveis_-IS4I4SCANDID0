@@ -15,7 +15,7 @@ const readCategoryController =  async (req: Request, res: Response): Promise<Res
 }
 
 const readCategoriesOfRealEstateController = async (req: Request, res: Response): Promise<Response> => {
-  const categoryId = req.params.id;
+  const categoryId: string = req.params.id;
   const categories: Category | null = await readCategoriesOfRealEstate(categoryId);
   return res.status(200).json(categories);
 }

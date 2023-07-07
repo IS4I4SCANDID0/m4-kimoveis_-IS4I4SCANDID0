@@ -10,16 +10,16 @@ const createSchedule = async (payload: TScheduleCreate, userId: number): Promise
 
   await userRepository.findOne({ where: { id: userId } });
   
-  const realEstateExists = await realEstateRepository.findOne({ where: { id: realEstateId } }) 
+  const realEstateExists: RealEstate | null = await realEstateRepository.findOne({ where: { id: realEstateId } }) 
   if(!realEstateExists) throw new AppError("RealEstate not found", 404);
 
-  const fullDate = new Date(`${date} ${hour}`);
+  const fullDate: Date = new Date(`${date} ${hour}`);
   if (fullDate.getDay() === 0 || fullDate.getDay() === 6) throw new AppError("Invalid date, work days are monday to friday");
   if (fullDate.getHours() < 8 || fullDate.getHours() > 18) {
     throw new AppError("Invalid hour, available times are 8AM to 18PM");
   }
   
-  const exitsUserSchedule = await schedulesRepository
+  const exitsUserSchedule: Schedule | null = await schedulesRepository
     .createQueryBuilder("schedules")
     .where("schedules.userId = :userId", { userId: userId })
     .andWhere("schedules.date = :date", { date: date })
@@ -35,7 +35,7 @@ const createSchedule = async (payload: TScheduleCreate, userId: number): Promise
     .getOne();
   if (realEstateScheduleExists) throw new AppError("Schedule to this real estate at this date and time already exists", 409);
 
-  const realEstate = await realEstateRepository.findOne({ where: { id: realEstateId } });
+  const realEstate: RealEstate | null = await realEstateRepository.findOne({ where: { id: realEstateId } });
   const user = await userRepository.findOne({ where: { id: userId } });
 
   const newSchedule = schedulesRepository.create({
@@ -49,14 +49,14 @@ const createSchedule = async (payload: TScheduleCreate, userId: number): Promise
 };
 
 const readReaEstateSchedules = async (id: number): Promise<RealEstate | null> => {
-  const schedules = await realEstateRepository.findOne({ where: { id: id }, relations: 
+  const schedulesReaEstate: RealEstate | null  = await realEstateRepository.findOne({ where: { id: id }, relations: 
     {
       schedules: { user: true }, 
       address: true, 
       category: true
     } 
   });
-  return schedules;
+  return schedulesReaEstate;
 };
 
 export { createSchedule, readReaEstateSchedules };

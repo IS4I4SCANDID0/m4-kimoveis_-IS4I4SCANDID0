@@ -5,12 +5,12 @@ import { realEstateRepository } from "../repositories/realEstate.repository";
 import { categoryRepository } from "../repositories/category.repository";
 import { DeepPartial } from "typeorm";
 import { TCategories } from "../interfaces/categories.interfaces";
-import { Category, RealEstate } from "../entities";
+import { Address, Category, RealEstate } from "../entities";
 
 const createRealEstate = async (payload: TRealEstateCreate): Promise<RealEstate> => {
   const { address: addressData, categoryId, ...realEstateData } = payload;
   
-  const existingAddress = await addressRepository.createQueryBuilder("address")
+  const existingAddress: Address | null = await addressRepository.createQueryBuilder("address")
     .where("address.street = :street", { street: addressData.street })
     .andWhere("address.zipCode = :zipCode", { zipCode: addressData.zipCode })
     .andWhere("address.city = :city", { city: addressData.city })
@@ -20,7 +20,7 @@ const createRealEstate = async (payload: TRealEstateCreate): Promise<RealEstate>
   if(existingAddress) throw new AppError("Address already exists", 409)
   
 
-  const newAddress = addressRepository.create(addressData);
+  const newAddress: Address = addressRepository.create(addressData);
   await addressRepository.save(newAddress)
 
   const id: number = payload.categoryId;
@@ -31,7 +31,7 @@ const createRealEstate = async (payload: TRealEstateCreate): Promise<RealEstate>
 
   const category: TCategories | null = await categoryRepository.findOne({ where: { id } }) 
 
-  const realEstate = realEstateRepository.create({
+  const realEstate: RealEstate = realEstateRepository.create({
     ...realEstateData,
     address: newAddress,
     category: category

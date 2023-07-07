@@ -3,7 +3,7 @@ import { TCategories, TCategoriesCreate, TCategoriesRead } from "../interfaces/c
 import { categoryRepository } from "../repositories/category.repository";
 import { categoriesReadSchema, categoriesSchema } from "../schemas/categories.schema";
 
-const createCategory  = async (payload: TCategoriesCreate): Promise<TCategories> => {
+const createCategory = async (payload: TCategoriesCreate): Promise<TCategories> => {
   const category: Category = categoryRepository.create(payload);
   await categoryRepository.save(category);
 
