@@ -1,13 +1,12 @@
 import { z } from  "zod"
 import { Repository } from "typeorm";
-
-import { decimalValueSchema, realEstateCreateSchema, realEstateSchema, realEstatesReadSchema } from "../schemas/realEstate.schema";
 import { addressesSchema } from "../schemas/addresses.schema";
 import { RealEstate } from "../entities";
+import { realEstatesReadSchema } from "../schemas/realEstate.schema";
 
 type TRealEstate = {
   id: number;
-  value: z.infer<typeof decimalValueSchema>;
+  value: number | string
   size: number;
   address: z.infer<typeof addressesSchema>;
   categoryId: number;
@@ -17,7 +16,7 @@ type TRealEstate = {
 };
 
 type TRealEstateCreate = {
-  value: z.infer<typeof decimalValueSchema> | number;
+  value: number | string;
   size: number;
   address: z.infer<typeof addressesSchema>;
   categoryId: number;

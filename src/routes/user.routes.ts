@@ -6,7 +6,6 @@ import { verifyEmail } from "../middlewares/verifyEmail.middleware";
 import { verifyToken } from "../middlewares/verifyToken.middleware";
 import { verifyIsAdminOrOwner } from "../middlewares/verifyPermission.middleware";
 import { verifyUserId } from "../middlewares/verifyUserId.middleware";
-import { disableUser } from "../services/user.services";
 import { verifyIsAdmin } from "../middlewares/verifyJustAdm.middleware";
 
 const userRoutes: Router = Router();

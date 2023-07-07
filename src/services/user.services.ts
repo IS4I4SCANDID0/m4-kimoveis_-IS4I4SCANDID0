@@ -1,4 +1,3 @@
-
 import { User } from "../entities";
 import { TUserCreate, TUserRead, TUserRepo, TUserReturn, TUserUpdate } from "../interfaces/user.interfaces";
 import { userRepository } from "../repositories/user.repository";
@@ -9,8 +8,6 @@ const createUser = async (payload: TUserCreate): Promise<TUserReturn> => {
   await userRepository.save(user)
 
   return userReturnSchema.parse(user);
-  // return userReturnSchema.parse({ ...user, createdAt: new Date(user.createdAt), updatedAt: new Date(user.updatedAt) });
-  // *** /=> SE FOR USAR O RETORNO COMENTADO COM A INSTÂNCIA DE DATE TROCAR PARA string no schema de user
 };
 
 const readUsers = async (): Promise<TUserRead> => {

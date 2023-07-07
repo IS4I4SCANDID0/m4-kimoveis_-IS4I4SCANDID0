@@ -6,9 +6,9 @@ const userSchema = z.object({
   email: z.string().email().max(45),
   password: z.string().max(120),
   admin: z.boolean().default(() => false),
-  createdAt: z.string(),//!TROCAR AQUI    
-  updatedAt: z.string(),//!TROCAR AQUI
-  deletedAt: z.string().nullish() //!TROCAR AQUI
+  createdAt: z.string(),    
+  updatedAt: z.string(),
+  deletedAt: z.string().nullish() 
 })
 
 const userReturnSchema = userSchema.omit({ password: true });

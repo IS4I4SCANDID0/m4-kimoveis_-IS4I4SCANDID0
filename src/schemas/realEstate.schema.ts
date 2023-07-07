@@ -1,14 +1,6 @@
 import { z } from "zod";
 import { addressesRelationSchema } from "./addresses.schema";
 
-const decimalValueSchema = z.union([z.string(),z.number()])
-// .refine((val) => {
-//   const stringValue = val.toString();
-//   const decPlaces = stringValue.split(".")[1] || "";
-//   return decPlaces.length <= 1;
-// }, "The number must have a maximum of one decimal place")
-// .default("0")
-
 const realEstateSchema = z.object({
   id: z.number().positive(),
   value: z.number().or(z.string()),
@@ -16,8 +8,8 @@ const realEstateSchema = z.object({
   address: addressesRelationSchema,
   categoryId: z.number().positive(),
   sold: z.boolean().default(false),
-  createdAt: z.string(),//!TROCAR AQUI    
-  updatedAt: z.string(),//!TROCAR AQUI 
+  createdAt: z.string(),    
+  updatedAt: z.string(), 
 });
 
 const realEstateCreateSchema = realEstateSchema.omit({ 
@@ -29,4 +21,4 @@ const realEstateCreateSchema = realEstateSchema.omit({
 
 const realEstatesReadSchema = realEstateSchema.array()
 
-export { realEstateSchema, realEstateCreateSchema, decimalValueSchema, realEstatesReadSchema }
+export { realEstateSchema, realEstateCreateSchema, realEstatesReadSchema }

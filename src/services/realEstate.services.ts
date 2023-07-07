@@ -2,13 +2,9 @@ import AppError from "../error/AppError";
 import { TRealEstateCreate, TRealEstatesRead } from "../interfaces/realEstate.interfaces";
 import { addressRepository } from "../repositories/address.repositoriy";
 import { realEstateRepository } from "../repositories/realEstate.repository";
-
 import { categoryRepository } from "../repositories/category.repository";
-
 import { DeepPartial } from "typeorm";
 import { TCategories } from "../interfaces/categories.interfaces";
-import { userReadSchema } from "../schemas/user.schema";
-import { realEstatesReadSchema } from "../schemas/realEstate.schema";
 import { Category, RealEstate } from "../entities";
 
 const createRealEstate = async (payload: TRealEstateCreate): Promise<RealEstate> => {
@@ -51,6 +47,3 @@ const readRealEstates = async (): Promise<RealEstate[]> => {
 }
 
 export { createRealEstate, readRealEstates }
-
-// return userReturnSchema.parse({ ...user, createdAt: new Date(user.createdAt), updatedAt: new Date(user.updatedAt) });
-// *** /=> SE FOR USAR O RETORNO COMENTADO COM A INSTÂNCIA DE DATE TROCAR PARA string no schema de user

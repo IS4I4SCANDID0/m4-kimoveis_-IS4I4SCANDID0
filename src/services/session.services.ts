@@ -1,5 +1,4 @@
 import { compare } from "bcryptjs";
-
 import AppError from "../error/AppError";
 import { TSessionLoginCreate, TSessionLoginReturn } from "../interfaces/session.interfaces";
 import { userRepository } from "../repositories/user.repository";
